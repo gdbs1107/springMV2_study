@@ -1,5 +1,6 @@
 package hello.login;
 
+import hello.login.web.filter.LoginCheckFilter;
 import hello.login.web.filter.LoginFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,19 @@ public class WebConfig {
         filterRegistrationBean.setFilter(new LoginFilter());
         //필터의 순서
         filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.addUrlPatterns("/*");
+
+        return filterRegistrationBean;
+    }
+
+
+    @Bean
+    public FilterRegistrationBean logCheckFilter() {
+        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(new LoginCheckFilter());
+        //필터의 순서
+        filterRegistrationBean.setOrder(2);
+        //여기서 인가 추가 할 수 있음
         filterRegistrationBean.addUrlPatterns("/*");
 
         return filterRegistrationBean;
